@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive JavaScript Interactive Demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <style>
+    .bulb-container {
+      width: 120px;
+      height: 180px;
+      position: relative;
+      margin: 0 auto;
+    }
+    
+    .bulb {
+      width: 80px;
+      height: 120px;
+      background: #e0e0e0;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      position: relative;
+      margin: 0 auto;
+      transition: all 0.3s ease;
+    }
+    
+    .bulb.on {
+      background: radial-gradient(circle, #ffeb3b 0%, #ffc107 50%, #ff9800 100%);
+      box-shadow: 0 0 30px #ffeb3b, 0 0 60px #ffeb3b, 0 0 90px #ffeb3b;
+    }
+    
+    .bulb-base {
+      width: 60px;
+      height: 40px;
+      background: #666;
+      margin: 0 auto;
+      border-radius: 0 0 10px 10px;
+      position: relative;
+    }
+    
+    .bulb-base::before {
+      content: '';
+      width: 50px;
+      height: 8px;
+      background: #444;
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+    
+    .bulb-base::after {
+      content: '';
+      width: 50px;
+      height: 8px;
+      background: #444;
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+    
+    .glow-effect {
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      right: -20px;
+      bottom: -20px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 235, 59, 0.3) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .bulb.on + .glow-effect {
+      opacity: 1;
+    }
+    
+    .section-card {
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+    }
+    
+    .btn-glow {
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-glow::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .btn-glow:hover::before {
+      left: 100%;
+    }
+    
+    @media (max-width: 640px) {
+      .bulb-container {
+        width: 100px;
+        height: 150px;
+      }
+      
+      .bulb {
+        width: 60px;
+        height: 90px;
+      }
+      
+      .bulb-base {
+        width: 45px;
+        height: 30px;
+      }
+      
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
+  <div class="container mx-auto px-4 py-8">
+    
+    <!-- Header -->
+    <div class="col text-center mb-12">
+      <h1 style="color: #e0e0e0;" class=" text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 mb-4">
+        <i  class="col row fas fa-code mr-4"></i> JavaScript Interactive Demo
+      </h1>
+      <p  class="text-xl text-gray-300">Explore interactive elements with responsive design</p>
+    </div>
+
+    <!-- Bulb Control Section -->
+    <section class="mb-16">
+      <div class="section-card rounded-2xl p-8 md:p-12 mx-auto max-w-4xl">
+        <h2 class="text-2xl md:text-4xl font-bold text-center text-cyan-400 mb-8 flex items-center justify-center">
+          <i class="fas fa-lightbulb mr-3"></i>Interactive Bulb Control
+        </h2>
+        
+        <div class="flex flex-col items-center space-y-8">
+          <div class="bulb-container">
+            <div id="bulb" class="bulb"></div>
+            <div class="glow-effect"></div>
+            <div class="bulb-base"></div>
+          </div>
+          
+          <div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
+            <button 
+              onclick="toggleBulb(true)" 
+              class="btn-glow bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-500/50 flex items-center justify-center">
+              <i class="fas fa-power-off mr-2"></i>BULB ON
+            </button>
+            <button 
+              onclick="toggleBulb(false)" 
+              class="btn-glow bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/50 flex items-center justify-center">
+              <i class="fas fa-power-off mr-2"></i>BULB OFF
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Text Change Section -->
+    <section class="mb-16">
+      <div class="section-card rounded-2xl p-8 md:p-12 mx-auto max-w-4xl">
+        <h2 class="text-2xl md:text-4xl font-bold text-center text-cyan-400 mb-8 flex items-center justify-center">
+          <i class="fas fa-edit mr-3"></i>Dynamic Text Control
+        </h2>
+        
+        <div class="flex flex-col items-center space-y-8">
+          <div class="bg-white text-purple-800 rounded-2xl p-6 md:p-8 min-h-[100px] w-full max-w-md flex items-center justify-center">
+            <div id="text" class="text-2xl md:text-4xl font-bold text-center break-words">
+              Assalaam-alaikum
+            </div>
+          </div>
+          
+          <div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
+            <button 
+              onclick="changeText('Welcome! 🎉')" 
+              class="btn-glow bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/50 flex items-center justify-center">
+              <i class="fas fa-exchange-alt mr-2"></i>Change Text
+            </button>
+            <button 
+              onclick="changeText('Assalaam-alaikum')" 
+              class="btn-glow bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/50 flex items-center justify-center">
+              <i class="fas fa-undo mr-2"></i>Undo Text
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Visibility Toggle Section -->
+    <section class="mb-16">
+      <div class="section-card rounded-2xl p-8 md:p-12 mx-auto max-w-4xl">
+        <h2 class="text-2xl md:text-4xl font-bold text-center text-cyan-400 mb-8 flex items-center justify-center">
+          <i class="fas fa-eye mr-3"></i>Visibility Toggle Control
+        </h2>
+        
+        <div class="flex flex-col items-center space-y-8">
+          <div class="bg-gradient-to-r from-yellow-400 to-orange-500 text-black rounded-2xl p-6 md:p-8 min-h-[100px] w-full max-w-md flex items-center justify-center transition-all duration-500">
+            <div id="toggleText" class="text-2xl md:text-4xl font-bold text-center">
+              SAYLANI 🎓
+            </div>
+          </div>
+          
+          <div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
+            <button 
+              onclick="toggleVisibility(false)" 
+              class="btn-glow bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/50 flex items-center justify-center">
+              <i class="fas fa-eye-slash mr-2"></i>Hide Text
+            </button>
+            <button 
+              onclick="toggleVisibility(true)" 
+              class="btn-glow bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-500/50 flex items-center justify-center">
+              <i class="fas fa-eye mr-2"></i>Show Text
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div class="text-center mt-16">
+      <h1 class="text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 mb-4">
+        <i class="fas fa-heart mr-3"></i>THANK YOU FOR VISITING
+      </h1>
+      <p class="text-gray-300 text-lg">Made with ❤️ using JavaScript & Tailwind CSS</p>
+    </div>
+  </div>
+
+  <script>
+    // Bulb control functionality
+    function toggleBulb(isOn) {
+      const bulb = document.getElementById('bulb');
+      if (isOn) {
+        bulb.classList.add('on');
+      } else {
+        bulb.classList.remove('on');
+      }
+    }
+
+    // Text change functionality
+    function changeText(newText) {
+      const textElement = document.getElementById('text');
+      textElement.style.opacity = '0';
+      textElement.style.transform = 'scale(0.8)';
+      
+      setTimeout(() => {
+        textElement.innerHTML = newText;
+        textElement.style.opacity = '1';
+        textElement.style.transform = 'scale(1)';
+      }, 200);
+    }
+
+    // Visibility toggle functionality
+    function toggleVisibility(isVisible) {
+      const toggleTextElement = document.getElementById('toggleText');
+      if (isVisible) {
+        toggleTextElement.style.display = 'flex';
+        toggleTextElement.style.opacity = '0';
+        toggleTextElement.style.transform = 'translateY(-20px)';
+        
+        setTimeout(() => {
+          toggleTextElement.style.opacity = '1';
+          toggleTextElement.style.transform = 'translateY(0)';
+        }, 50);
+      } else {
+        toggleTextElement.style.opacity = '0';
+        toggleTextElement.style.transform = 'translateY(-20px)';
+        
+        setTimeout(() => {
+          toggleTextElement.style.display = 'none';
+        }, 300);
+      }
+    }
+
+    // Add smooth transitions to text elements
+    document.getElementById('text').style.transition = 'all 0.3s ease';
+    document.getElementById('toggleText').style.transition = 'all 0.3s ease';
+
+    // Add some interactive animations
+    document.addEventListener('DOMContentLoaded', function() {
+      // Animate sections on scroll
+      const sections = document.querySelectorAll('section');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      });
+
+      sections.forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(20px)';
+        section.style.transition = 'all 0.6s ease';
+        observer.observe(section);
+      });
+    });
+  </script>
+</body>
+</html>
